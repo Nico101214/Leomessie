@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Envoi d'email</title>
+</head>
+<body>
+    <header class="ballon">
+        <h1>Page d'envoi d'Email</h1>
+        <nav>
+            <a href="accueil.html" title="Notre Accueil">Accueil</a>
+            <a href="menu.html" title="Le Menu">Menu</a>
+            <a href="contact.html" title="Nos Contact">Contact</a>
+        </nav>
+    </header>
+    <div>
+        <div class="bottine">
+            <div>
+                <h2>A-propos de Nous</h2>
+                <ul>
+                  <li>
+                <p>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum eveniet dignissimos tenetur incidunt sed consequuntur cupiditate temporibus quod! Accusamus provident assumenda praesentium amet unde dolor fugit hic cumque soluta autem.
+                    -- (other content).</p></li> <li><p>Bienvenue dans le presse-papiers Gboard. Le texte que vous copiez est enregistré ici.Appuyez sur un élément pour le coller dans le champ de texte.</p></li> <li><p>Appuyez de manière prolongée sur un élément pour l'épingler. Les éléments retirés seront supprimés au bout d'une heure.Utilisez l'icône de modification pour épingler, ajouter ou supprimer des éléments.Appuyez sur un élément pour le coller dans le champ de texte.Bienvenue dans le presse-papiers Gboard. Le texte que vous copiez est enregistré ici.
+     
+                </p>
+                </li>
+                  
+                </ul>
+            </div>
+            <hr>
+            <div>
+                <h2>Vos Coordonnées Email</h2>
+                <form id="emailForm">
+                    <div>
+                        <label for="nom">Nom : </label>
+                        <input type="text" name="nom" id="nom" placeholder="nom" required>
+                    </div><br>
+                    <div>
+                        <label for="post-nom">Post-Nom : </label>
+                        <input type="text" name="post-nom" id="post-nom" placeholder="post-nom" required>
+                    </div><br>
+                    <div>
+                        <label for="pre-nom">Pre-Nom : </label>
+                        <input type="text" name="pre-nom" id="pre-nom" placeholder="Pre-nom" required>
+                    </div><br>
+                    <div>
+                        <label for="sexe">Sexe : </label>
+                        <input type="radio" name="genre" value="masculin" id="homme" required> Homme
+                        <input type="radio" name="genre" value="feminin" id="femme" required> Femme
+                    </div><br>
+                    <div>
+                        <label for="etat-civil">Etat civil : </label>
+                        <select id="etat-civil" required>
+                            <option value="">Sélectionner</option>
+                            <option value="celibataire">Célibataire</option>
+                            <option value="marier">Marier</option>
+                            <option value="divorcer">Divorcer</option>
+                        </select>
+                    </div><br>
+                    <div>
+                        <label for="email">Votre Email : </label>
+                        <input type="email" id="email" required name="email" placeholder="Mackintoshkali@gmail.com">
+                    </div><br>
+                    <div>
+                        <input type="checkbox" id="terms" required> J'accepte les conditions d'utilisations
+                    </div><br>
+                    <div>
+                        <input type="submit" value="Envoyer">
+                        <input type="reset" value="Annuler">
+                    </div><br>
+                </form>
+            </div>
+        </div>
+        <div class="cranpon">
+            <h2>Où Nous trouver !</h2>
+            <div>
+                <p> <em>112 Rue de la Province <br>
+                    Kinshasa <br>
+                    République démocratique du Congo </em> 
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche l'envoi du formulaire
+
+            // Récupérer les données des champs du formulaire
+            let nom = document.getElementById('nom').value;
+            let postNom = document.getElementById('post-nom').value;
+            let preNom = document.getElementById('pre-nom').value;
+            let sexe = document.querySelector('input[name="genre"]:checked').value;
+            let etatCivil = document.getElementById('etat-civil').value;
+            let email = document.getElementById('email').value;
+            let terms = document.getElementById('terms').checked;
+
+            if (!nom || !postNom || !preNom || !email || !terms) {
+                alert('Veuillez remplir tous les champs et accepter les conditions.');
+                return;
+            }
+
+            // Préparer les données à envoyer
+            const data = {
+                nom: nom,
+                postNom: postNom,
+                preNom: preNom,
+                sexe: sexe,
+                etatCivil: etatCivil,
+                email: email
+            };
+
+            // Envoyer les données au serveur avec fetch
+            fetch('http://localhost:5000/api/endpoint', {
+                method: 'POST', // Méthode d'envoi
+                headers: {
+                    'Content-Type': 'application/json', // Type de contenu
+                },
+                body: JSON.stringify(data) // Convertir les données en JSON
+            })
+            .then(response => response.json()) // Convertir la réponse en JSON
+            .then(data => {
+                console.log('Success:', data); // Gérer la réponse du serveur
+                alert('Merci, ' + nom + '! Votre email a été envoyé avec succès.');
+                // Réinitialiser le formulaire après soumission réussie
+                document.getElementById('emailForm').reset();
+            })
+            .catch((error) => {
+                console.error('Error:', error); // Gérer les erreurs
+                alert('Une erreur est survenue. Veuillez réessayer plus tard.');
+            });
+        });
+    </script>
+</body>
+</html>

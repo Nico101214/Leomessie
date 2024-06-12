@@ -1,0 +1,36 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.ballon{
+    background-color: gray;
+    padding: 20px;
+    height: auto;
+}
+.ballon h1{
+    text-align: center;
+}
+
+.ballon a{
+    margin: 40px;
+    text-decoration: none;
+}
+.ballon a:hover {
+    text-decoration-line:underline;
+    color: white;
+    border: white 2px solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+.bottine{
+    background-color: lightgray;
+    padding: 20px;
+    height: auto;
+}
+
+.cranpon{
+    background-color: gray;
+    padding: 20px;
+    text-align: center;
+}
